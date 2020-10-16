@@ -1,4 +1,4 @@
-package com.cognixia.jump.jdbcproject.exception;
+package com.cognixia.jump.jdbcproject.exception.employee;
 
 public class AgeException extends Exception {
 
