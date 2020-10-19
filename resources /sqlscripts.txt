@@ -79,5 +79,8 @@ insert into employee values(null, '5', 'Josh', 'Ember', '90', 'Lawyer', '160000'
 
 select * from employee;
 
+/*updating the name of the company_name (meant to name the department) to department_name*/
+ALTER TABLE Department CHANGE `company_name` `department_name` varchar(50);
+
 
 
