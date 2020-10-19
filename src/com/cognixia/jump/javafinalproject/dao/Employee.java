@@ -11,7 +11,7 @@ public class Employee implements Comparable<Employee> {
 	private double salary;
 	private String email;
 	private String phone;
-	private String address;
+	private Address address;
 	/*
 	public Employee(long userID, long departmentId, String lastName, 
 			String firstName, int age, String position,
@@ -24,16 +24,16 @@ public class Employee implements Comparable<Employee> {
 	}
 	*/
 	
-	public Employee(long userId ,long departmentId, String lastName, String firstName, 
+	public Employee(long userId ,long departmentId, String firstName, String lastName,
 			int age, String position, double salary, String email, String phone, 
-			String address) {
+			Address address) {
 		super();
 		//this.userId = USER_ID;
 		
 		this.userId = userId;
 		this.departmentId = departmentId;
-		this.lastName = lastName;
 		this.firstName = firstName;
+		this.lastName = lastName;
 		this.age = age;
 		this.position = position;
 		this.salary = salary;
@@ -43,6 +43,24 @@ public class Employee implements Comparable<Employee> {
 		//USER_ID++;
 	}
 	
+	
+
+	public Employee(long departmentId, String firstName, String lastName, int age, String position, double salary,
+			String email, String phone, Address address) {
+		super();
+		this.departmentId = departmentId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+		this.position = position;
+		this.salary = salary;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+	}
+
+
+
 	public long getUserId() {
 		return userId;
 	}
@@ -95,8 +113,44 @@ public class Employee implements Comparable<Employee> {
 		this.phone = phone;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public long getDepartmentId() {
+		return departmentId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	@Override
@@ -110,6 +164,16 @@ public class Employee implements Comparable<Employee> {
 		return userId + "," + departmentId + "," + firstName
 				+ "," + lastName + "," + age + "," + position + "," + salary
 				+ "," + email + "," + phone + "," + address;
+	}
+	
+	  public String getFullAdddress() {
+		  String result = address.getAddress1()+ " " +address.getAddress2()+
+				  " "+address.getCity()+ " "+ address.getState()+ " "+
+				  address.getCountry()+" "+address.getZipcode();
+		  return result;
+	  }
+	public Long getEmpAddressId() {
+		return address.getAddressId();
 	}
 	
 }	

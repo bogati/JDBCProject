@@ -41,6 +41,25 @@ public class Department implements Comparable<Department> {
 	
 
 	
+
+
+
+
+	public Department(String name, String phone, Address address, long budget) {
+		super();
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+		this.budget = budget;
+	}
+
+
+
+
+
+
+
+
 	/*
 	
 	public void add(Employee e) {
@@ -134,6 +153,28 @@ public class Department implements Comparable<Department> {
 		return departmentId;
 	}
 	
+	public Address getAddress() {
+		return address;
+	}
+
+
+
+
+
+
+
+
+	public void setDepartmentId(long departmentId) {
+		this.departmentId = departmentId;
+	}
+
+
+
+
+
+
+
+
 	public String getName() {
 		return name;
 	}
@@ -203,9 +244,12 @@ public class Department implements Comparable<Department> {
 	    }
 	  
 	  public String getFullAdddress() {
-		  String result = this.address.getAddress1()+this.address.getAddress2()+
-				  this.address.getCity()+this.address.getState()+
-				  this.address.getCountry()+this.address.getZipcode();
+		  String result = this.address.getAddress1()+" "+this.address.getAddress2()+
+				  " "+this.address.getCity()+ " "+this.address.getState()+" "+
+				  this.address.getCountry()+" "+this.address.getZipcode();
 		  return result;
 	  }
+	  public Long getDepAddressId() {
+			return address.getAddressId();
+		}
 }

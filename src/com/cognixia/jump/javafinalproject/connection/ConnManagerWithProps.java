@@ -13,7 +13,7 @@ public class ConnManagerWithProps {
 	private static Connection connection; // will be null at moment
 	
 	/*
-	 * private static final String URL = "jdbc:mysql://localhost:3306/university?serverTimezone=EST5EDT";
+	 * private static final String URL = "jdbc:mysql://localhost:3306/employee_management_system?serverTimezone=EST5EDT";
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "Root@123";
 	 */
@@ -26,14 +26,17 @@ public class ConnManagerWithProps {
 			
 			Properties props = new Properties();
 			
-			props.load( new FileInputStream("resources/config.properties") );
+			FileInputStream fi = new FileInputStream("resources/config.properties") ;
+			props.load(fi);
 			
-			String url = props.getProperty("jdbc:mysql://localhost:3306/university?serverTimezone=EST5EDT");
-			String username = props.getProperty("root");
-			String password = props.getProperty("Root@123");
+			String url = props.getProperty("url");
+			String username = props.getProperty("username");
+			String password = props.getProperty("password");
 
 			connection = DriverManager.getConnection(url, username, password);
 			System.out.println("Connected.");
+			fi.close();
+			System.out.println("file stream closed.");
 
 		} catch (ClassNotFoundException e) {
 
@@ -72,6 +75,8 @@ public class ConnManagerWithProps {
 		try {
 			conn.close();
 			System.out.println("Connection closed");
+			
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

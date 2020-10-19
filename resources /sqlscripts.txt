@@ -1,13 +1,12 @@
-
-
+use employee_management_system;
 drop table employee;
 drop table department;
 drop table address ;
 
 
-use employee_management_system;
 
-create table address(   address_id int primary key auto_increment, address1 varchar(50), address2 varchar(50), city varchar(20) not null, state varchar(2) not null,
+
+create table address(   address_id bigint primary key auto_increment, address1 varchar(50), address2 varchar(50), city varchar(20) not null, state varchar(2) not null,
 						country char(2) not null, zip_code varchar(16));
 describe address;
 
@@ -28,7 +27,7 @@ insert into address values(null, '7955 32nd Ave SW', null, 'Seattle', 'WA', 'US'
 select * from address;
 
 
-create table department( department_id int not null primary key auto_increment, company_name varchar(50), phone varchar(20), budget bigint, address_id int not null unique,
+create table department( department_id bigint not null primary key auto_increment, department_name varchar(50), phone varchar(20), budget bigint, address_id bigint not null unique,
 						  foreign key (address_id) references address(address_id));
 describe department;
 #	private long departmentId;
@@ -38,7 +37,7 @@ describe department;
 #	private long budget;
 #	private Set<Employee> employees;
 
-insert into department(department_id, company_name, phone, budget, address_id)
+insert into department(department_id, department_name, phone, budget, address_id)
 				values(null,'Software', '334-234-4565', '343646', '1');
 insert into department values( null,'Hardware', '345-345-3672', '3462345', '2');
 insert into department values(null,'HR', '444-356-3345', '23455', '3');
@@ -59,10 +58,10 @@ select * from department;
 	private String phone;
 	private String address;
 */
-drop table employee; 
-create table employee(  employee_id int not null primary key auto_increment, department_id int not null, foreign key (department_id) references department(department_id),
-						first_name varchar(50) not null, last_name varchar(50) not null, age varchar(3) not null, position varchar(50),
-                        salary int, email text, phone varchar(20), address_id int not null, foreign key (address_id) references address(address_id));
+ 
+create table employee(  employee_id bigint not null primary key auto_increment, department_id bigint not null, foreign key (department_id) references department(department_id),
+						first_name varchar(50) not null, last_name varchar(50) not null, age int(3) not null, position varchar(50),
+                        salary double, email varchar(50), phone varchar(20), address_id bigint not null, foreign key (address_id) references address(address_id));
 describe employee;
 
 
@@ -71,7 +70,7 @@ insert into employee(employee_id, department_id, first_name, last_name, age, pos
 				values(null, '1', 'Joe', 'Rock', '55', 'Manager', '30000' , 'Joe.Rock@gmail.com', '345-345-3666', '1');
 insert into employee values(null, '1', 'Bob', 'Lip', '23', 'Intern', '70000', 'Bob.Lip@gmail.com', '435-363-4567', '2');
 
-select * from address; 
+
 insert into employee values(null, '2', 'Bob', 'Peters', '45', 'Manager', '90000' , 'bpeters@gmail.com', '555-444-5678', '3');
 insert into employee values(null, '2', 'Tom', 'Cruise', '56', 'Staff', '43000' , 'TomC@gmail.com', '455-345-6223', '4');
 insert into employee values(null, '4', 'Thomas', 'De Leon', '88', 'UX', '120000' , 'DeUX@gmail.com', '422-478-5686', '5');
@@ -79,8 +78,11 @@ insert into employee values(null, '5', 'Josh', 'Ember', '90', 'Lawyer', '160000'
 
 select * from employee;
 
+
 /*updating the name of the company_name (meant to name the department) to department_name*/
 ALTER TABLE Department CHANGE `company_name` `department_name` varchar(50);
+/*updating the age datatype to int */
+ALTER TABLE Employee CHANGE `age` `age` int(3);
 
 
 

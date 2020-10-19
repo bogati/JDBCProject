@@ -13,6 +13,18 @@ public class Address {
 	
 	private long addressId; 
 	private String address1;
+	public Address(long addressId, String address1, String address2, String city, String state, String country,
+			String zipcode) {
+		super();
+		this.addressId = addressId;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.city = city;
+		this.state = state;
+		this.country = country;
+		this.zipcode = zipcode;
+	}
+
 	private String address2;
 	private String city;
 	private String state;
@@ -76,10 +88,10 @@ public class Address {
 	}
 
 	//add address use constructor 
-	public Address(long addressId, String address1, String address2, String city, String state, String country,
+	public Address(String address1, String address2, String city, String state, String country,
 			String zipcode) {
 		super();
-		this.addressId = addressId;
+		
 		this.address1 = address1;
 		this.address2 = address2;
 		this.city = city;

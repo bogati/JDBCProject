@@ -19,10 +19,10 @@ public class SingletonConnectionManager {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("Registered Driver");
+			System.out.println("Registered Driver from Singleton class");
 			
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-			System.out.println("Connected.");
+			System.out.println("Connected  from Singleton class ");
 			
 		} catch (ClassNotFoundException e) {
 			
@@ -57,7 +57,7 @@ public class SingletonConnectionManager {
 
 		try {
 			conn.close();
-			System.out.println("Connection closed");
+			System.out.println("Connection closed from Singleton class");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

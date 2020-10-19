@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.cognixia.jump.javafinalproject.connection.ConnManagerWithProps;
 import com.cognixia.jump.javafinalproject.connection.SingletonConnectionManager;
 import com.cognixia.jump.javafinalproject.dao.Department;
 import com.cognixia.jump.javafinalproject.dao.DepartmentDAOImpl;
+import com.cognixia.jump.javafinalproject.dao.DepartmentNotFoundException;
+import com.cognixia.jump.javafinalproject.dao.Employee;
+import com.cognixia.jump.javafinalproject.dao.EmployeeDAOImpl;
 
 public class TempMain {
 	
@@ -21,20 +25,26 @@ public class TempMain {
 	System.out.println("welcome to console please list departments");
 	DepartmentDAOImpl dep = new DepartmentDAOImpl();
 	
-	List<Department> l = dep.getAllDepartments();
+	dep.getAllDepartments();
 	
-	for(int i=0; i <l.size(); i++) {
-	System.out.println(l.get(i).getDepartmentId());
-	System.out.println(l.get(i).getName());
-	System.out.println(l.get(i).getPhone());
-	System.out.println(l.get(i).getFullAdddress());
-	System.out.println(l.get(i).getBudget());
+
 	
+	System.out.println("welcome to console please list employees");
+	EmployeeDAOImpl emp = new EmployeeDAOImpl();
+	//emp.getAllEmployees();
+	//emp.getAllEmployeesByDepartmentId(1);
+	try {
+		emp.getAllEmployeesByDepartmentName("Software");
+	} catch (DepartmentNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
 	}
+	
+	
 
 		try {
 			conn.close();
-			System.out.println("Connection closed");
+			System.out.println("Connection closed from temp Main");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -48,4 +58,5 @@ public class TempMain {
 		
 		
 }
+
 

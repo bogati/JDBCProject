@@ -6,21 +6,24 @@ import java.util.List;
 public interface EmployeeDAO {
 	
 	//get all the employees of the company 
-	public List<Department> getAllEmployees();
+	public List<Employee> getAllEmployees();
 	
 	//get all the employees using department id 
-	public Department getAllEmployeesByDepartmentId(int deptId);
+	public List<Employee> getAllEmployeesByDepartmentId(int deptId);
 	
-	public Department getAllEmployeesByDepartmentName(String deptName) throws DepartmentNotFoundException;
+	////get all the employees using department name
+	public List<Employee> getAllEmployeesByDepartmentName(String deptName) throws DepartmentNotFoundException;
 	
-	//add employee in specific Department by using DepartmentId
-	public boolean addEmployeeInDepartmentById(int deptId);
+	//add employee in specific Department by using Employee obj
+	//you dont need to give dept id because employee obj by nature must have dept id
+	public boolean addEmployeeInDepartment(Employee emp);
 	
-	//add employee in specific Department by using DepartmentName
-	public boolean addEmployeeInDepartmentByName(int deptName);
 	
+	
+	//delete employee using the employeed id 
 	public boolean deleteEmployee(int empId);
 	
+	//update employee by passing emp obj such that you can update whatever column you like
 	public boolean updateEmployee(Employee emp);
 	
 	
