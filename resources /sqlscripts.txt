@@ -1,0 +1,88 @@
+use employee_management_system;
+drop table employee;
+drop table department;
+drop table address ;
+
+
+
+
+create table address(   address_id bigint primary key auto_increment, address1 varchar(50), address2 varchar(50), city varchar(20) not null, state varchar(2) not null,
+						country char(2) not null, zip_code varchar(16));
+describe address;
+
+insert into address(address_id, address1, address2, city, state, country, zip_code)
+			values(null, '6544SE Main St', 'FL 8', 'San Jose', 'CA', 'US', 95110);
+insert into address values(null, '878NE 3rd St', 'UNIT 1', 'Portland', 'OR', 'US', '95110');
+insert into address values(null, '34 Mills Rd', 'FL 3', 'Newcastle', 'ME', 'US', '04553');
+insert into address values(null, '160 Amphitheatre Pkwy', null, 'Mountain View', 'CA', 'US', '94043');
+insert into address values(null, '604 2nd Ave', 'BLDG 1', 'Seattle', 'WA', 'US', '98104');
+insert into address values(null, '2502 Folsom St', 'FL 19', 'San Francisco', 'CA', 'US', '94110');
+insert into address values( null, '4451SE 11th St', 'APT 4B', 'San Jose', 'CA', 'US', 95110);
+insert into address values(null, '343 Main St', 'APT 305', 'San Jose', 'CA', 'US', '95110');
+insert into address values(null, '6040 SE Raymond St', null, 'Portland', 'OR', 'US', '97206');
+insert into address values(null, '8314 SE 16th Ave', 'APT 27', 'Portland', 'OR', 'US', '97202');
+insert into address values(null, '857 Farley St', 'APT 6F', 'Mountain View', 'CA', 'US', '94043');
+insert into address values(null, '7955 32nd Ave SW', null, 'Seattle', 'WA', 'US', '98126');
+
+select * from address;
+
+
+create table department( department_id bigint not null primary key auto_increment, department_name varchar(50), phone varchar(20), budget bigint, address_id bigint not null unique,
+						  foreign key (address_id) references address(address_id));
+describe department;
+#	private long departmentId;
+#	private String name;
+#	private String phone;
+#	private String address;
+#	private long budget;
+#	private Set<Employee> employees;
+
+insert into department(department_id, department_name, phone, budget, address_id)
+				values(null,'Software', '334-234-4565', '343646', '1');
+insert into department values( null,'Hardware', '345-345-3672', '3462345', '2');
+insert into department values(null,'HR', '444-356-3345', '23455', '3');
+insert into department values(null, 'Design', '223-234-2355', '223429387982', '4');
+insert into department values(null, 'Legal', '555-333-6643', '29385', '5');
+insert into department values(null,'Link', '422-234-5235', '9879798', '6');
+
+select * from department;
+
+/*private long userId;
+	private long departmentId;
+	private String firstName;
+	private String lastName;
+	private int age;
+	private String position;
+	private double salary;
+	private String email;
+	private String phone;
+	private String address;
+*/
+ 
+create table employee(  employee_id bigint not null primary key auto_increment, department_id bigint not null, foreign key (department_id) references department(department_id),
+						first_name varchar(50) not null, last_name varchar(50) not null, age int(3) not null, position varchar(50),
+                        salary double, email varchar(50), phone varchar(20), address_id bigint not null, foreign key (address_id) references address(address_id));
+describe employee;
+
+
+
+insert into employee(employee_id, department_id, first_name, last_name, age, position, salary, email, phone, address_id)
+				values(null, '1', 'Joe', 'Rock', '55', 'Manager', '30000' , 'Joe.Rock@gmail.com', '345-345-3666', '1');
+insert into employee values(null, '1', 'Bob', 'Lip', '23', 'Intern', '70000', 'Bob.Lip@gmail.com', '435-363-4567', '2');
+
+
+insert into employee values(null, '2', 'Bob', 'Peters', '45', 'Manager', '90000' , 'bpeters@gmail.com', '555-444-5678', '3');
+insert into employee values(null, '2', 'Tom', 'Cruise', '56', 'Staff', '43000' , 'TomC@gmail.com', '455-345-6223', '4');
+insert into employee values(null, '4', 'Thomas', 'De Leon', '88', 'UX', '120000' , 'DeUX@gmail.com', '422-478-5686', '5');
+insert into employee values(null, '5', 'Josh', 'Ember', '90', 'Lawyer', '160000' , 'JoshLaw@gmail.com', '444-333-1234', '6');
+
+select * from employee;
+
+
+/*updating the name of the company_name (meant to name the department) to department_name*/
+ALTER TABLE Department CHANGE `company_name` `department_name` varchar(50);
+/*updating the age datatype to int */
+ALTER TABLE Employee CHANGE `age` `age` int(3);
+
+
+
