@@ -1,4 +1,4 @@
-package com.cognixia.jump.javafinalproject.console;
+package com.cognixia.jump.javafinalproject.file;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,5 +1,6 @@
 package com.cognixia.jump.javafinalproject.connection;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,9 +26,14 @@ public class ConnManagerWithProps {
 			System.out.println("Registered Driver");
 			
 			Properties props = new Properties();
+			if(new File ("config.properties").exists()) {
+				System.out.println("File found !!");
+				
+			}
+			//config.properties
 			
-			FileInputStream fi = new FileInputStream("resources/config.properties") ;
-			props.load(fi);
+			props.load(new FileInputStream("config.properties") );
+		
 			
 			String url = props.getProperty("url");
 			String username = props.getProperty("username");
@@ -35,7 +41,7 @@ public class ConnManagerWithProps {
 
 			connection = DriverManager.getConnection(url, username, password);
 			System.out.println("Connected.");
-			fi.close();
+			
 			System.out.println("file stream closed.");
 
 		} catch (ClassNotFoundException e) {
@@ -66,7 +72,7 @@ public class ConnManagerWithProps {
 
 	public static void main(String[] args) {
 
-		Connection conn = SingletonConnectionManager.getConnection();
+		Connection conn = ConnManagerWithProps.getConnection();
 
 		// Connection other = SingletonConnectionManager.getConnection();
 
@@ -86,3 +92,25 @@ public class ConnManagerWithProps {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

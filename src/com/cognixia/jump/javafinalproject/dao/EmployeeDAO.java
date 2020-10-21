@@ -9,7 +9,7 @@ public interface EmployeeDAO {
 	public List<Employee> getAllEmployees();
 	
 	//get all the employees using department id 
-	public List<Employee> getAllEmployeesByDepartmentId(int deptId);
+	public List<Employee> getAllEmployeesByDepartmentId(long deptId);
 	
 	////get all the employees using department name
 	public List<Employee> getAllEmployeesByDepartmentName(String deptName) throws DepartmentNotFoundException;
@@ -21,10 +21,16 @@ public interface EmployeeDAO {
 	
 	
 	//delete employee using the employeed id 
-	public boolean deleteEmployee(int empId);
+	public boolean deleteEmployeeById(long empId);
 	
-	//update employee by passing emp obj such that you can update whatever column you like
-	public boolean updateEmployee(Employee emp);
+
+	long getIdOflastAddedEmployeeId();
+
+	boolean updateEmployeePosition(String position, long empId);
+
+	boolean updateEmployeePhone(String phone, long empId);
+
+	boolean updateEmployeeSalary(double phone, long empId);
 	
 	
 

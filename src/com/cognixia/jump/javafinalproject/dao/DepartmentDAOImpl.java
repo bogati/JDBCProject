@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.cognixia.jump.javafinalproject.connection.ConnManagerWithProps;
 import com.cognixia.jump.javafinalproject.connection.SingletonConnectionManager;
+import com.mysql.cj.protocol.Resultset;
 
 
 
@@ -66,11 +67,12 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		}
 		
 		for(int i=0; i <deptList.size(); i++) {
-			System.out.println(deptList.get(i).getDepartmentId());
-			System.out.println(deptList.get(i).getName());
-			System.out.println(deptList.get(i).getPhone());
-			System.out.println(deptList.get(i).getFullAdddress());
-			System.out.println(deptList.get(i).getBudget());
+			System.out.println("The department id id :      "+deptList.get(i).getDepartmentId());
+			System.out.println("The department name is:      "+deptList.get(i).getName());
+			System.out.println("The department phone number is:      "+deptList.get(i).getPhone());
+			System.out.println("The department full address is:       "+deptList.get(i).getFullAdddress());
+			System.out.println("the department budget is:       "+deptList.get(i).getBudget());
+			System.out.println("--------------------------------------");
 		}
 		
 		
@@ -82,22 +84,182 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	
 
 	@Override
-	public Department getDepartmentById(int deptId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Department> getDepartmentById(long deptId) {
+		
+		List<Department> deptList = new ArrayList<>();
+		
+		ResultSet rs = null;
+		try(PreparedStatement pstmt = conn.prepareStatement("select * from department left join address on department.address_id=address.address_id where department_id=?"))
+		{
+			pstmt.setLong(1, deptId);
+			rs = pstmt.executeQuery();
+			int c=0; 
+			
+			while(rs.next()) {
+			long departmentId = rs.getLong("department_id");
+			String name = rs.getString("department_name");
+			String phone = rs.getString("phone");
+			long budget = rs.getLong("budget");
+			
+			//System.out.println("The Department with id "+deptId+"is "+rs.next());
+			
+			Address addr = new Address(rs.getLong("address_id"),
+							rs.getString("address1"),rs.getString("address2"),
+							rs.getString("city"),rs.getString("state"),
+							rs.getString("country"),rs.getString("zip_code")
+									   );
+			
+			
+			//long departmentId, String name, String phone, Address address, long budget
+			
+			Department dept = new Department(departmentId, name, phone, addr, budget);
+			
+			deptList.add(dept);
+			c++;
+			
+			}
+
+			if(c==0) {
+				System.out.println("Sorry the department id that you entered does not exist");
+				return null;
+			}
+			
+			for(int i=0; i <deptList.size(); i++) {
+				System.out.println("The department id id :      "+deptList.get(i).getDepartmentId());
+				System.out.println("The department name is:      "+deptList.get(i).getName());
+				System.out.println("The department phone number is:      "+deptList.get(i).getPhone());
+				System.out.println("The department full address is:       "+deptList.get(i).getFullAdddress());
+				System.out.println("the department budget is:       "+deptList.get(i).getBudget());
+				System.out.println("--------------------------------------");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return deptList;
 	}
 
 	@Override
-	public Department getDepartmentByName(String deptName) throws DepartmentNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Department> getDepartmentByName(String deptName) throws DepartmentNotFoundException {
+		
+		List<Department> deptList = new ArrayList<>();
+		
+		ResultSet rs = null;
+		try(PreparedStatement pstmt = conn.prepareStatement("select * from department left join address on department.address_id=address.address_id where department_name=?"))
+		{
+			pstmt.setString(1, deptName);
+			rs = pstmt.executeQuery();
+			int c=0; 
+			
+			
+			while(rs.next()) {
+			long departmentId = rs.getLong("department_id");
+			String name = rs.getString("department_name");
+			String phone = rs.getString("phone");
+			long budget = rs.getLong("budget");
+			
+			//System.out.println("The Department with id "+deptId+"is "+rs.next());
+			
+			Address addr = new Address(rs.getLong("address_id"),
+							rs.getString("address1"),rs.getString("address2"),
+							rs.getString("city"),rs.getString("state"),
+							rs.getString("country"),rs.getString("zip_code")
+									   );
+			
+			
+			//long departmentId, String name, String phone, Address address, long budget
+			
+			Department dept = new Department(departmentId, name, phone, addr, budget);
+			
+			deptList.add(dept);
+			c++;
+			
+			}
+			if(c==0) {
+				System.out.println("Sorry the department name that you entered does not exist");
+				return null;
+			}
+			
+			for(int i=0; i <deptList.size(); i++) {
+				System.out.println("The department id id :      "+deptList.get(i).getDepartmentId());
+				System.out.println("The department name is:      "+deptList.get(i).getName());
+				System.out.println("The department phone number is:      "+deptList.get(i).getPhone());
+				System.out.println("The department full address is:       "+deptList.get(i).getFullAdddress());
+				System.out.println("the department budget is:       "+deptList.get(i).getBudget());
+				System.out.println("--------------------------------------");
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return deptList;
+		
 	}
 
 
 
 	@Override
-	public boolean updateDepartment(Department dept) {
-		// TODO Auto-generated method stub
+	public boolean updateDepartmentName(long deptId, String depName) {
+		
+		try(PreparedStatement pstmt = conn.prepareStatement("update Department set department_name=? where department_id =?")
+			//PreparedStatement pstmt2 = conn.prepareStatement("select * from employee where department_id=?");	
+			)
+		{
+		
+			pstmt.setString(1, depName);
+			pstmt.setLong(2, deptId);
+			
+			//pstmt2.setLong(1, dept.getDepartmentId());
+			
+			int count = pstmt.executeUpdate();
+			
+			
+			
+			
+			if(count > 0) {
+				System.out.println("Update successful !");
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Update of the department id "+deptId+" is unsuccessful !");
+		return false;
+	}
+
+	@Override
+	public boolean updateDepartmentPhone(long deptId, String phone) {
+		
+		try(PreparedStatement pstmt = conn.prepareStatement("update Department set phone=? where department_id =?")
+			//PreparedStatement pstmt2 = conn.prepareStatement("select * from employee where department_id=?");	
+			)
+		{
+		
+			pstmt.setString(1, phone);
+			pstmt.setLong(2, deptId);
+			
+			//pstmt2.setLong(1, dept.getDepartmentId());
+			
+			int count = pstmt.executeUpdate();
+			
+			
+			
+			
+			if(count > 0) {
+				System.out.println("Update successful !");
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Update of the department id "+deptId+" is unsuccessful !");
 		return false;
 	}
 	
@@ -124,7 +286,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		
 		
 		if(c!=0 ) {
-			System.out.println("Sorry the Department with id "+deptId+" has employees you cant delte it");
+			System.out.println("Sorry the Department with id "+deptId+" has employees you cant delete it");
 			pstmt.close();
 			return false;
 		}
@@ -174,7 +336,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 					if(c>1) break;
 				}
 				//fetchsize working weirdly !!!!!!
-				System.out.println("size of result set for deptname "+deptName+"is "+rs.getFetchSize());
+				//System.out.println("size of result set for department "+deptName+" is "+rs.getFetchSize());
 			
 		
 		
@@ -197,7 +359,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 			int count = pstmt.executeUpdate();
 			
 			if(count>0) {
-				System.out.println("Department with id : "+deptName+" deleted");
+				System.out.println("Department with name : "+deptName+" deleted");
 				return true;
 			}
 			
@@ -266,6 +428,8 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 			// work with connection manipulating database
 			
 			DepartmentDAOImpl dimpl = new DepartmentDAOImpl();
+			
+			/*
 			List<Department> l = dimpl.getAllDepartments();
 			
 			for(int i=0; i <l.size(); i++) {
@@ -291,7 +455,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 			
 			Department dept = new Department("Data","908-908-6780",addr,78778);
 			dept.setDepartmentId(dimpl.getIdOflastAddedDepartmentId());
-			System.out.println("The last added dept id is" + dimpl.getIdOflastAddedDepartmentId());
+			//System.out.println("The last added dept id is" + dimpl.getIdOflastAddedDepartmentId());
 		
 			
 			
@@ -304,6 +468,27 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 			//checking delete functions 
 			dimpl.deleteDepartmentById(21);
 			dimpl.deleteDepartmentByName("Software");
+			
+			
+			*/
+			
+			dimpl.getDepartmentById(5);
+			try {
+				dimpl.getDepartmentByName("Software");
+			} catch (DepartmentNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+
+			Address addr = new Address("123 barbara st", "unit 1", "Emeryville", "CA", "US", "95616");
+			AddressDAO  addrdao = new AddressDAOImpl();
+			addrdao.addAddress(addr);
+			
+			Department dept = new Department("Softwarenew","000-908-6780",addr,78078);
+			//dept.setDepartmentId(dimpl.getIdOflastAddedDepartmentId());
+			//dimpl.updateDepartment(dept,1);
+			
 			try {
 				conn.close();
 				System.out.println("Connection closed from DepartmentDAO");

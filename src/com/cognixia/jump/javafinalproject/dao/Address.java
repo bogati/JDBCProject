@@ -13,6 +13,12 @@ public class Address {
 	
 	private long addressId; 
 	private String address1;
+	private String address2;
+	private String city;
+	private String state;
+	private String country;
+	private String zipcode;
+	
 	public Address(long addressId, String address1, String address2, String city, String state, String country,
 			String zipcode) {
 		super();
@@ -24,12 +30,6 @@ public class Address {
 		this.country = country;
 		this.zipcode = zipcode;
 	}
-
-	private String address2;
-	private String city;
-	private String state;
-	private String country;
-	private String zipcode;
 	
 	public long getAddressId() {
 		return addressId;

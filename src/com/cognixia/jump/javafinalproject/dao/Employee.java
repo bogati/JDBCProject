@@ -175,5 +175,12 @@ public class Employee implements Comparable<Employee> {
 	public Long getEmpAddressId() {
 		return address.getAddressId();
 	}
+
+
+
+	public void setEmployeeId(long idOflastAddedEmployeeId) {
+		
+		this.userId = idOflastAddedEmployeeId;
+	}
 	
 }	

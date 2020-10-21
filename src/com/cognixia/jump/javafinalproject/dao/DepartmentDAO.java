@@ -7,10 +7,10 @@ public interface DepartmentDAO {
 	public List<Department> getAllDepartments();
 	
 	//list the Department using the Department iD 
-	public Department getDepartmentById(int deptId);
+	public List<Department> getDepartmentById(long deptId);
 	
 	//list the Department using the Department name 
-	public Department getDepartmentByName(String deptName) throws DepartmentNotFoundException;
+	public List<Department> getDepartmentByName(String deptName) throws DepartmentNotFoundException;
 	
 	//add the Department using Department Object = 1 record in db 
 	public boolean addDepartment(Department dept);
@@ -23,9 +23,11 @@ public interface DepartmentDAO {
 	
 
 	//update department , pass the dept obj such that you can pick whatever to update
-	public boolean updateDepartment(Department dept);
+	public boolean updateDepartmentName(long deptId, String depname);
 	
 	public long getIdOflastAddedDepartmentId() ;
+
+	boolean updateDepartmentPhone(long deptId, String phone);
 	
 	
 
